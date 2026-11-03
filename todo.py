@@ -3,7 +3,7 @@ from tkinter import *
 
 root = tk.Tk()
 root.title("To-do list")
-root.geometry("350x350")
+root.geometry("350x480")
 root.configure(bg='#747eed')
 totalamount = 0
 tasktimes = []
@@ -37,6 +37,8 @@ def adder():
         totaltime.config(text="Total Time Required is " + str(ttlhours) + "Hours"+ str(ttlmins)+"Mins")
     else:
         totaltime.config(text="Total Time Required is " + str(totalamount)+ " Mins")
+    
+    actleft.configure(text = "Total # Of Tasks Remaining are: " + str(lister.size()))
 
 
 def done():
@@ -60,6 +62,7 @@ def done():
         totaltime.config(text="Total Time Required is " + str(ttlhours) + "Hours"+ str(ttlmins)+"Mins")
     else:
         totaltime.config(text="Total Time Required is " + str(totalamount)+ " Mins")
+    actleft.configure(text = "Total # Of Tasks Remaining are: " + str(lister.size()))
 
 activitylbl = tk.Label(root, text = "Activity Name:", font=("Segoe UI", 10), bg='#747eed')
 activitylbl.pack()
@@ -77,17 +80,23 @@ timeentry.pack(pady=2)
 statuslbl = tk.Label(root, text="", font=("Segoe UI",14), bg='#747eed')
 statuslbl.pack(pady=5)
 
-button = Button(root,text='Add New Activity', bg="#9fa7fc")
-button.pack()
+buttonframe = tk.Frame(root, bg='#747eed')
+buttonframe.pack(pady=5)
+
+button = Button(buttonframe,text='Add New Activity', bg="#9fa7fc")
+button.pack(side=tk.LEFT, padx=5)
 button.config(command=adder)
 
-finish = Button(root, text='Finish!!!', command = done, bg="#9fa7fc")
-finish.pack(pady=5)
+finish = Button(buttonframe, text='Finish!!!', command = done, bg="#9fa7fc")
+finish.pack(side = tk.LEFT, padx=5)
 
 totaltime = tk.Label(root, text="Total Time Required: 0 mins", font = ("Segoe UI", 11), bg='#747eed')
 totaltime.pack(pady=5)
 
 lister = tk.Listbox(root, font=("Times New Roman",12), width=40, height = 10, bg="#cfd3fc")
 lister.pack(pady=5)
+
+actleft = tk.Label(root, text = "Total # Of Tasks Left: 0", font = ("Segoe UI", 14), bg='#747eed')
+actleft.pack(pady=5)
 
 root.mainloop()
