@@ -18,7 +18,6 @@ def adder():
 
     t=int(time)
 
-    
 
     tasktimes.append(t)
     totalamount += t
@@ -29,6 +28,9 @@ def adder():
     total = activity +" - "+ time + " mins"
     
     lister.insert(tk.END, total)
+
+    entry.delete(0, tk.END)
+    timeentry.delete(0, tk.END)
 
     statuslbl.config(text=activity+" has been added")
     if totalamount>=60:
@@ -59,20 +61,20 @@ def done():
     else:
         totaltime.config(text="Total Time Required is " + str(totalamount)+ " Mins")
 
-activitylbl = tk.Label(root, text = "Activity Name:", font=("Arial", 10), bg='#747eed')
+activitylbl = tk.Label(root, text = "Activity Name:", font=("Segoe UI", 10), bg='#747eed')
 activitylbl.pack()
-entry = tk.Entry(root, font=("Arial",10), width=30, bg="#cfd3fc")
+entry = tk.Entry(root, font=("Segoe UI",10), width=30, bg="#cfd3fc")
 entry.pack(pady=2)
 
-timelbl = tk.Label(root, text = "Time in Mins:", font=("Arial", 10), bg='#747eed')
+timelbl = tk.Label(root, text = "Time in Mins:", font=("Segoe UI", 10), bg='#747eed')
 timelbl.pack()
-timeentry = tk.Entry(root, font=("Arial",10), width=10, bg="#cfd3fc")
+timeentry = tk.Entry(root, font=("Segoe UI",10), width=10, bg="#cfd3fc")
 timeentry.pack(pady=2)
 
-#label = tk.Label(root, text="", font=("Arial",14))
+#label = tk.Label(root, text="", font=("Segoe UI",14))
 #label.pack(pady=5)
 
-statuslbl = tk.Label(root, text="", font=("Arial",14), bg='#747eed')
+statuslbl = tk.Label(root, text="", font=("Segoe UI",14), bg='#747eed')
 statuslbl.pack(pady=5)
 
 button = Button(root,text='Add New Activity', bg="#9fa7fc")
@@ -82,7 +84,7 @@ button.config(command=adder)
 finish = Button(root, text='Finish!!!', command = done, bg="#9fa7fc")
 finish.pack(pady=5)
 
-totaltime = tk.Label(root, text="Total Time Required: 0 mins", font = ("Arial", 11), bg='#747eed')
+totaltime = tk.Label(root, text="Total Time Required: 0 mins", font = ("Segoe UI", 11), bg='#747eed')
 totaltime.pack(pady=5)
 
 lister = tk.Listbox(root, font=("Times New Roman",12), width=40, height = 10, bg="#cfd3fc")
