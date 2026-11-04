@@ -3,7 +3,7 @@ from tkinter import *
 
 root = tk.Tk()
 root.title("To-do list")
-root.geometry("350x480")
+root.geometry("350x500")
 root.configure(bg='#747eed')
 totalamount = 0
 tasktimes = []
@@ -64,6 +64,14 @@ def done():
         totaltime.config(text="Total Time Required is " + str(totalamount)+ " Mins")
     actleft.configure(text = "Total # Of Tasks Remaining are: " + str(lister.size()))
 
+def clear():
+    global totalamount
+    totalamount = 0
+    tasktimes.clear()
+    lister.delete(0, tk.END)
+    totaltime.config(text="Total Time Required = 0 mins")
+    actleft.config(text="Total Amounf of Tasks Left: 0")
+
 activitylbl = tk.Label(root, text = "Activity Name:", font=("Segoe UI", 10), bg='#747eed')
 activitylbl.pack()
 entry = tk.Entry(root, font=("Segoe UI",10), width=30, bg="#cfd3fc")
@@ -80,6 +88,12 @@ timeentry.pack(pady=2)
 statuslbl = tk.Label(root, text="", font=("Segoe UI",14), bg='#747eed')
 statuslbl.pack(pady=5)
 
+entry.bind("<Return>", lambda event: adder())
+timeentry.bind("<Return>", lambda event: adder())
+
+root.bind("<q>", lambda event: done())
+#timeentry.bind("<q>", lambda event: done())
+
 buttonframe = tk.Frame(root, bg='#747eed')
 buttonframe.pack(pady=5)
 
@@ -89,6 +103,10 @@ button.config(command=adder)
 
 finish = Button(buttonframe, text='Finish!!!', command = done, bg="#9fa7fc")
 finish.pack(side = tk.LEFT, padx=5)
+
+clearall = Button(root, text="Clear All Tasks", bg = "#9fa7fc")
+clearall.config(command=clear)
+clearall.pack(pady=5)
 
 totaltime = tk.Label(root, text="Total Time Required: 0 mins", font = ("Segoe UI", 11), bg='#747eed')
 totaltime.pack(pady=5)
