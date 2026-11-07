@@ -1,14 +1,18 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import *
 import random
 
 root = tk.Tk()
 root.title("To-do list")
-root.geometry("350x500")
+root.geometry("350x550")
 root.configure(bg='#747eed')
 totalamount = 0
 tasktimes = []
 darkon = False
+
+comptasks = 0
+ttltasks = 0
 
 def themer():
     global darkon
@@ -18,6 +22,7 @@ def themer():
         activitylbl.config(bg = "#010b73", fg = "#747eed")
         timelbl.config(bg = "#010b73", fg = "#747eed")
         statuslbl.config(bg = "#010b73", fg = "#747eed")
+        prioritylbl.config(bg = "#010b73", fg = "#747eed")
         totaltime.config(bg = "#010b73", fg = "#747eed")
         actleft.config(bg = "#010b73", fg = "#747eed")
         entry.config(bg = "#010b73", fg = "#747eed")
@@ -31,6 +36,7 @@ def themer():
         activitylbl.config(bg = "#747eed", fg = "#010b73")
         timelbl.config(bg = "#747eed", fg = "#010b73")
         statuslbl.config(bg = "#747eed", fg = "#010b73")
+        prioritylbl.config(bg = "#747eed", fg = "#010b73")
         totaltime.config(bg = "#747eed", fg = "#010b73")
         actleft.config(bg = "#747eed", fg = "#010b73")
         entry.config(bg = "#747eed", fg = "#010b73")
@@ -44,10 +50,11 @@ def themer():
 
 def adder():
     global totalamount
-
+    global ttltasks
     
     activity = entry.get()
     time = timeentry.get()
+    priority = priorityentry.get()
 
     t=int(time)
 
@@ -55,10 +62,14 @@ def adder():
     tasktimes.append(t)
     totalamount += t
 
+    ttltasks += 1
+    progress.config(maximum=ttltasks)
+
+
     ttlhours = totalamount // 60
     ttlmins = totalamount % 60
 
-    total = activity +" - "+ time + " mins"
+    total =priority +" - "+ activity +" - "+ time + " mins"
     
     lister.insert(tk.END, total)
 
@@ -76,6 +87,7 @@ def adder():
 
 def done():
     global totalamount
+    global comptasks
 
     select = lister.curselection()
 
@@ -90,6 +102,9 @@ def done():
 
     lister.delete(index)
     statuslbl.config(text="Task has Been Finished!!!")
+
+    comptasks += 1
+    progress.config(value=comptasks)
 
     if totalamount>=60:
         totaltime.config(text="Total Time Required is " + str(ttlhours) + "Hours"+ str(ttlmins)+"Mins")
@@ -133,6 +148,14 @@ statuslbl.pack(pady=5)
 entry.bind("<Return>", lambda event: adder())
 timeentry.bind("<Return>", lambda event: adder())
 
+prioritylbl = tk.Label(root, text="Priority Level:", font = ("Segoe UI",10), bg='#747eed')
+prioritylbl.pack()
+
+priorityentry = tk.StringVar(root)
+priorityentry.set("Medium")
+prioritydrop = tk.OptionMenu(root, priorityentry, "High", "Medium", "Low")
+prioritydrop.config(bg="#cfd3fc", font = ("Segoe UI",14), width=10, height = 1)
+prioritydrop.pack(pady=2)
 
 root.bind("<q>", lambda event: done())
 #timeentry.bind("<q>", lambda event: done())
@@ -171,5 +194,8 @@ actleft.pack(pady=5)
 
 themebutton = Button(buttonframe2, text = "Dark Mode", command = themer, bg = "#9fa7fc")
 themebutton.pack(side = tk.LEFT, padx = 5)
+
+progress = ttk.Progressbar(root, orient = "horizontal", length = 260, mode = "determinate")
+progress.pack(pady=5)
 
 root.mainloop()
