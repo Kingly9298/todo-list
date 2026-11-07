@@ -5,7 +5,7 @@ import random
 
 root = tk.Tk()
 root.title("To-do list")
-root.geometry("350x550")
+root.geometry("350x600")
 root.configure(bg='#747eed')
 totalamount = 0
 tasktimes = []
